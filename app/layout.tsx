@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/react";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const Yekan = localFont({
+  src: "./fonts/yekan/YekanBakh.woff2",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="fa">
+      <body className={`${Yekan.className} ${Yekan.style}`}>
         <NextUIProvider>{children}</NextUIProvider>
       </body>
     </html>
