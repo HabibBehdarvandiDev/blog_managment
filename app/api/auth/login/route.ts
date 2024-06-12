@@ -30,7 +30,10 @@ export async function POST(req: NextRequest) {
   });
 
   if (!isUserExist) {
-    return NextResponse.json({ error: "نام کاربری وارد شده وجود ندارد!" });
+    return NextResponse.json(
+      { error: "نام کاربری وارد شده وجود ندارد!" },
+      { status: 404 }
+    );
   }
 
   const isPasswordmatch = await bcrypt.compareSync(
@@ -55,8 +58,11 @@ export async function POST(req: NextRequest) {
     expiresIn: "1h",
   });
 
-  return NextResponse.json({
-    message: "احراز هویت موفقیت آمیز بود!",
-    token: token,
-  });
+  return NextResponse.json(
+    {
+      message: "احراز هویت موفقیت آمیز بود!",
+      token: token,
+    },
+    { status: 200 }
+  );
 }
