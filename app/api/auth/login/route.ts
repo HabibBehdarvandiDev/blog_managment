@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
   const isUserExist = await prisma.user.findUnique({
     where: {
-      username: username,
+      username: username.toLowerCase(),
     },
   });
 
