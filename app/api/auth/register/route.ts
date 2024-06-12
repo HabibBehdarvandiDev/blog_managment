@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { registerSchema } from "./schema";
 import prisma from "@/utils/db";
+import bcrypt from "bcrypt";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -37,5 +38,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  
+  const hashedPassword = await bcrypt.hash(
+    password,
+    parseInt(process.env.BCRYPT_SALT!)
+  );
+
+  const newUser = await prisma.user.create({
+    data: {
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      password: hashedPassword,
+    },
+  });
+
+  return NextResponse.json(
+    { message: "ثبت نام شما تکمیل شد.", newUser: newUser },
+    { status: 200 }
+  );
 }
