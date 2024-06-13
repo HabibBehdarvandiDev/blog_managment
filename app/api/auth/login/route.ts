@@ -58,11 +58,20 @@ export async function POST(req: NextRequest) {
     expiresIn: "1h",
   });
 
-  return NextResponse.json(
+  const response = NextResponse.json(
     {
       message: "احراز هویت موفقیت آمیز بود!",
-      token: token,
     },
     { status: 200 }
   );
+
+  response.cookies.set("token", token, {
+    httpOnly: true,
+    secure: true,
+    path: "/",
+    sameSite: "strict",
+    maxAge: 60 * 60,
+  });
+
+  return response;
 }
