@@ -119,9 +119,12 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(context: { params: { userId: string } }) {
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { userId: string } }
+) {
   const { params } = context;
-  let userId;
+  let userId = parseInt(params.userId);
 
   try {
     userId = parseInt(params.userId);
@@ -140,7 +143,7 @@ export async function DELETE(context: { params: { userId: string } }) {
     );
   }
 
-  const isUserExist = await prisma.user.findUnique({
+  const isUserExist = await prisma.user.findFirst({
     where: {
       id: userId,
     },
