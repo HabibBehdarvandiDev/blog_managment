@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
+import { blogSchema } from "./schema";
 
 export async function GET(req: NextRequest) {
   try {
@@ -29,6 +30,56 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  
+  const validation = blogSchema.safeParse(body);
 
+  if (!validation.success) {
+    return NextResponse.json(validation.error.formErrors, { status: 400 });
+  }
+
+  const isUserExist = await prisma.user.findUnique({
+    where: {
+      id: validation.data.author_id,
+    },
+  });
+
+  if (!isUserExist) {
+    return NextResponse.json(
+      {
+        error: "شما مجاز به ایجاد بلاگ نیستید!",
+      },
+      { status: 403 }
+    );
+  }
+
+  const isUserActive = isUserExist.active === true;
+
+  if (!isUserActive) {
+    return NextResponse.json(
+      {
+        error: "حساب کاربری شما هنوز تایید نشده لطفا بعدا دوباره تلاش کنید!",
+      },
+      { status: 403 }
+    );
+  }
+
+  const data = validation.data;
+
+  try {
+    const newBlog = await prisma.blog.create({
+      data: {
+        title: data.title,
+        content: data.content,
+        author_id: data.author_id,
+        thumbnail_url: data.thumbnail_url,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "بلاگ با موفقیت ایجاد شد.",
+        newBlog: newBlog,
+      },
+      { status: 201 }
+    );
+  } catch (error) {}
 }
