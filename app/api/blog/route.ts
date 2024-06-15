@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   if (!isUserExist) {
     return NextResponse.json(
       {
-        error: "شما مجاز به ایجاد بلاگ نیستید!",
+        error: "شما مجاز به ایجاد نوشته نیستید!",
       },
       { status: 403 }
     );
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "بلاگ با موفقیت ایجاد شد.",
+        message: "نوشته با موفقیت ایجاد شد.",
         newBlog: newBlog,
       },
       { status: 201 }
