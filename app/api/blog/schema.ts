@@ -7,4 +7,8 @@ export const blogSchema = z.object({
   thumbnail_url: z.string(),
 });
 
-export const blogSchemaPartial = blogSchema.partial();
+export const blogSchemaPartial = blogSchema.partial().merge(
+  z.object({
+    author_id: z.number().nonnegative().int(),
+  })
+);
