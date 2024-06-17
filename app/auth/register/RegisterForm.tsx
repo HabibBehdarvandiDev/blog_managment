@@ -9,12 +9,13 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/react";
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ContactSupportButton from "./ContactSupportButton";
 import InfoModal from "./InfoModal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/app/api/auth/register/schema";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
   first_name: string;
@@ -25,6 +26,8 @@ type Inputs = {
 };
 
 const RegisterForm = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -72,7 +75,7 @@ const RegisterForm = () => {
         console.log("invalid register");
       }
 
-      console.log("valid register");
+      router.push("/auth/login")
     } catch (error) {
       // show error
       console.log("code 500 error");
