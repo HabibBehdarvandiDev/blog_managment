@@ -61,7 +61,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
+        success: true,
         message: "برچسب با موفقیت ساخته شد",
+        newTag,
       },
       { status: 201 }
     );
