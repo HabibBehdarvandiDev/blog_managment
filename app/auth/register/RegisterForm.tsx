@@ -47,10 +47,12 @@ const RegisterForm = () => {
   const checkUsername = async (username: string) => {
     try {
       setCheckerLoading(true);
-      const response = await axios.get("/api/user");
-      const data: User[] = response.data;
+      const response = await axios.get(
+        `/api/user/username?username=${username}`
+      );
+      const data: User = response.data;
 
-      const user = data.find((user) => user.username === username);
+      const user = data.username === username;
 
       setUsernameExist(!!user);
     } catch (error) {
@@ -75,7 +77,7 @@ const RegisterForm = () => {
         console.log("invalid register");
       }
 
-      router.push("/auth/login")
+      router.push("/auth/login");
     } catch (error) {
       // show error
       console.log("code 500 error");
@@ -92,13 +94,8 @@ const RegisterForm = () => {
   ) => {
     setCheckerLoading(true);
     const value = event.currentTarget.value;
-
     setUsernameValue(value);
-
     setUChecker(!!value);
-
-    console.log(usernameValue);
-
     debouncedCheckUsername(value);
   };
 
@@ -164,12 +161,16 @@ const RegisterForm = () => {
               }`}
             >
               {usernameExist ? (
-                <CancelCircleIcon className="ml-2" />
+                <>
+                  <CancelCircleIcon className="ml-2" />
+                  نام کاربری قبلا انتخاب شده است.
+                </>
               ) : (
-                <CheckmarkCircleIcon className="ml-2" />
+                <>
+                  <CheckmarkCircleIcon className="ml-2" />
+                  نام کاربری در دسترس است.
+                </>
               )}
-              نام کاربری {usernameValue}{" "}
-              {usernameExist ? "قبلا انتخاب شده است." : "در دسترس است."}
             </p>
           )}
         </div>
