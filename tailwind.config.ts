@@ -82,6 +82,7 @@ const config: Config = {
           "950": "#0a2b47",
           DEFAULT: "#1597e2",
         },
+        black: "#222222",
       },
     },
   },
