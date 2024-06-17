@@ -1,24 +1,20 @@
 "use client";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import InfoModal from "./InfoModal";
-import ContactSupportButton from "./ContactSupportButton";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useCallback, useState } from "react";
-import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
-import EyeIcon from "@/app/components/icons/EyeIcon";
-import axios from "axios";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Tooltip,
-  Spinner,
-} from "@nextui-org/react";
-import { User } from "@/schema";
-import { debounce } from "@/utils/helpers";
 import CancelCircleIcon from "@/app/components/icons/CancelCircleIcon";
 import CheckmarkCircleIcon from "@/app/components/icons/CheckmarkCircleIcon";
+import EyeIcon from "@/app/components/icons/EyeIcon";
+import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
+import { User } from "@/schema";
+import { debounce } from "@/utils/helpers";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Spinner } from "@nextui-org/react";
+import axios from "axios";
+import { useCallback, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import ContactSupportButton from "./ContactSupportButton";
+import InfoModal from "./InfoModal";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/app/api/auth/register/schema";
 
 type Inputs = {
   first_name: string;
@@ -33,7 +29,9 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: zodResolver(registerSchema),
+  });
 
   const [isVisible, setIsVisible] = useState(false);
   const [usernameExist, setusernameExist] = useState(false);
@@ -62,16 +60,20 @@ const RegisterForm = () => {
       setCheckerLoading(false);
     }
   };
+  axios.defaults.baseURL = "http://localhost:3000"
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await axios.post("api/register", data);
+      const response = await axios.post("/api/auth/register", data);
 
-      if (response.status !== 200) {
-        // show error
+      if (response.status !== 201) {
+        console.log("invalid register");
       }
+
+      console.log("valid register");
     } catch (error) {
       // show error
+      console.log("code 500 error");
     }
   };
 
@@ -126,7 +128,12 @@ const RegisterForm = () => {
             uChecker ? "visible" : "invisible"
           }`}
         >
-          <Button variant="light" size="sm" className="text-zinc-800 absolute top-3 left-3" isIconOnly>
+          <Button
+            variant="light"
+            size="sm"
+            className="text-zinc-800 absolute top-3 left-3"
+            isIconOnly
+          >
             <CancelCircleIcon className="w-4 h-4" />
           </Button>
           <h3 className="font-medium text-right w-full">
@@ -204,7 +211,7 @@ const RegisterForm = () => {
         className="w-full font-medium"
         type="submit"
       >
-        ثبت نام
+        {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}
       </Button>
       <ContactSupportButton />
     </form>
