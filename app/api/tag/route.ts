@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
   const isTagExist = await prisma.tags.findUnique({
     where: {
-      tag_name: validation.data.tagName,
+      tag_name: validation.data.tag_name,
     },
   });
 
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
   try {
     const newTag = await prisma.tags.create({
       data: {
-        tag_name: validation.data.tagName,
+        tag_name: validation.data.tag_name,
       },
     });
 
