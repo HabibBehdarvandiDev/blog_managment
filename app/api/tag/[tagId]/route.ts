@@ -141,3 +141,63 @@ export async function PATCH(
     );
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { tagId: string } }
+) {
+  const { tagId } = context.params;
+  const id = parseInt(tagId);
+
+  if (isNaN(id) || id <= 0) {
+    return NextResponse.json(
+      { error: "لطفا آیدی معتبر وارد کنید!" },
+      { status: 400 }
+    );
+  }
+
+  let tag;
+  try {
+    tag = await prisma.tags.findUnique({ where: { id: id } });
+    if (!tag) {
+      return NextResponse.json(
+        { error: "برچسب مورد نظر پیدا نشد!" },
+        { status: 404 }
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          "مشکلی هنگام ارتباط با دیتابیس به وجود آمده، لطفا با پشتیبانی تماس بگیرید!",
+      },
+      { status: 500 }
+    );
+  }
+
+  try {
+    const deltedtag = await prisma.tags.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "برچسب با موفقیت حذف شد.",
+        deltedtag,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          "مشکلی هنگام حذف کردن برچسب به وجود آمد، لطفا با پشتیبانی تماس بگیرید.!",
+      },
+      { status: 500 }
+    );
+  }
+}
