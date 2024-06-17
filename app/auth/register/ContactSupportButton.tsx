@@ -6,7 +6,7 @@ const ContactSupportButton = () => {
     <Button
       color="primary"
       variant="light"
-      className="font-medium absolute top-1 left-4"
+      className="font-medium"
       endContent={<SupportIcon />}
     >
       ارتباط با پشتیبانی
