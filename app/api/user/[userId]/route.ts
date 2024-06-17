@@ -1,6 +1,6 @@
 import prisma from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
-import { userSchema } from "./schema";
+import { userSchemaPartial } from "./schema";
 
 export async function GET(
   request: NextRequest,
@@ -76,7 +76,7 @@ export async function PATCH(
     );
   }
 
-  const partialSchema = userSchema.partial();
+  const partialSchema = userSchemaPartial;
 
   const validation = partialSchema.safeParse(body);
 
