@@ -2,6 +2,7 @@
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import InfoModal from "./InfoModal";
+import ContactSupportButton from "./ContactSupportButton";
 
 const RegisterForm = () => {
   return (
@@ -25,6 +26,7 @@ const RegisterForm = () => {
       </div>
 
       <InfoModal />
+      <ContactSupportButton />
 
       <Button color="primary" variant="shadow" className="w-full font-medium">
         ثبت نام
