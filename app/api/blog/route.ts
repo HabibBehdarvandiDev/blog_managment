@@ -62,6 +62,29 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  try {
+    const isTitleUnique = await prisma.blog.findUnique({
+      where: {
+        title: validation.data.title,
+      },
+    });
+
+    isTitleUnique &&
+      NextResponse.json(
+        {
+          error: "نوشته با این نام از قبل وجود دارد.",
+        },
+        { status: 400 }
+      );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: "مشکلی هنگام ارتباط با دیتابیس به وجود آمد",
+      },
+      { status: 400 }
+    );
+  }
+
   const data = validation.data;
 
   try {

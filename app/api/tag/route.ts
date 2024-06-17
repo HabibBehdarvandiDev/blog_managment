@@ -2,7 +2,7 @@ import prisma from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
 import { tagsSchema } from "./schema";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const tags = await prisma.tags.findMany();
 

@@ -3,7 +3,10 @@ import prisma from "@/utils/db";
 import { requestToBodyStream } from "next/dist/server/body-streams";
 import { blogSchemaPartial } from "../schema";
 
-export async function GET(context: { params: { blogId: string } }) {
+export async function GET(
+  req: NextRequest,
+  context: { params: { blogId: string } }
+) {
   const { params } = context;
   let blogId: number;
 
@@ -30,7 +33,10 @@ export async function GET(context: { params: { blogId: string } }) {
   return NextResponse.json(isBlogExist, { status: 200 });
 }
 
-export async function DELETE(context: { params: { blogId: string } }) {
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { blogId: string } }
+) {
   const { params } = context;
   let blogId: number;
 
