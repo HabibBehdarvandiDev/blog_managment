@@ -34,7 +34,7 @@ const RegisterForm = () => {
   });
 
   const [isVisible, setIsVisible] = useState(false);
-  const [usernameExist, setusernameExist] = useState(false);
+  const [usernameExist, setUsernameExist] = useState(false);
   const [usernameValue, setUsernameValue] = useState("");
   const [uChecker, setUChecker] = useState(false);
   const [checkerLoading, setCheckerLoading] = useState(true);
@@ -49,20 +49,22 @@ const RegisterForm = () => {
 
       const user = data.find((user) => user.username === username);
 
-      if (user) {
-        setusernameExist(true);
-      } else {
-        setusernameExist(false);
-      }
+      setUsernameExist(!!user);
     } catch (error) {
       //show error
     } finally {
       setCheckerLoading(false);
     }
   };
-  axios.defaults.baseURL = "http://localhost:3000"
+  axios.defaults.baseURL = "http://localhost:3000";
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const isPasswordMatch = data.password === data.confirm_password;
+
+    if (!isPasswordMatch) {
+      console.log("passwords do not match!");
+    }
+
     try {
       const response = await axios.post("/api/auth/register", data);
 
@@ -90,11 +92,8 @@ const RegisterForm = () => {
 
     setUsernameValue(value);
 
-    if (usernameValue === "" || usernameValue.length <= 0) {
-      setUChecker(false);
-    } else {
-      setUChecker(true);
-    }
+    setUChecker(!!value);
+
     console.log(usernameValue);
 
     debouncedCheckUsername(value);
@@ -110,8 +109,18 @@ const RegisterForm = () => {
         به جمع تولید کنندگان محتوای دنیای گیم بپیوندید 🎮
       </p>
       <div className="form-control w-full flex gap-4">
-        <Input type="text" label="نام" {...register("first_name")} />
-        <Input type="text" label="نام خانوادگی" {...register("last_name")} />
+        <Input
+          type="text"
+          label="نام"
+          {...register("first_name")}
+          autoComplete="off"
+        />
+        <Input
+          type="text"
+          label="نام خانوادگی"
+          {...register("last_name")}
+          autoComplete="off"
+        />
       </div>
       <div className="form-control w-full relative">
         <Input
@@ -119,12 +128,12 @@ const RegisterForm = () => {
           label="نام کاربری"
           {...register("username")}
           onKeyUp={handleUsernameKeyUp}
-          autoComplete="false"
+          autoComplete="off"
           onBlur={() => setUChecker(false)}
           onFocus={() => setUChecker(true)}
         />
         <div
-          className={`absolute z-10 left-1/2 -translate-x-1/2 bg-white shadow-primary-100 shadow-md rounded-xl p-5 flex flex-col space-y-4 ${
+          className={`absolute z-40 left-1/2 -translate-x-1/2 bg-white shadow-primary-100 shadow-md rounded-xl p-5 flex flex-col space-y-4 ${
             uChecker ? "visible" : "invisible"
           }`}
         >
@@ -177,6 +186,7 @@ const RegisterForm = () => {
               )}
             </button>
           }
+          autoComplete="off"
           type={isVisible ? "text" : "password"}
           label="رمز عبور"
           {...register("password")}
@@ -200,8 +210,15 @@ const RegisterForm = () => {
           type={isVisible ? "text" : "password"}
           label="تایید رمز عبور"
           {...register("confirm_password")}
+          autoComplete="off"
         />
       </div>
+
+      {Object.values(errors).map((error, index) => (
+        <p key={index} className="text-red-500 text-sm">
+          {error.message}
+        </p>
+      ))}
 
       <InfoModal />
 
@@ -210,6 +227,7 @@ const RegisterForm = () => {
         variant="shadow"
         className="w-full font-medium"
         type="submit"
+        disabled={isSubmitting}
       >
         {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}
       </Button>
