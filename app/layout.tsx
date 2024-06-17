@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa">
-      <body className={`${Yekan.className} ${Yekan.style}`}>
+    <html lang="fa" dir="rtl">
+      <body className={`${Yekan.className}`}>
         <NextUIProvider>{children}</NextUIProvider>
       </body>
     </html>
