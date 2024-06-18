@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
 import ToastContainer from "./components/ToastContainer";
+import { Suspense } from "react";
+import PageLoading from "./components/PageLoading";
 
 const Yekan = localFont({
   src: "./fonts/yekan/YekanBakh.woff2",
