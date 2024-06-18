@@ -84,6 +84,25 @@ const config: Config = {
         },
         black: "#222222",
       },
+      keyframes: {
+        "slide-in": {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        "fade-out": {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0", transform: "translateX(100%)" },
+        },
+        progress: {
+          "0%": { width: "100%" },
+          "100%": { width: "0%" },
+        },
+      },
+      animation: {
+        "slide-in": "slide-in 0.3s forwards",
+        "fade-out": "fade-out 0.3s ease-out",
+        progress: "progressAnimation",
+      },
     },
   },
   darkMod: "class",
