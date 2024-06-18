@@ -8,7 +8,7 @@ import { debounce } from "@/utils/helpers";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ContactSupportButton from "./ContactSupportButton";
@@ -49,23 +49,38 @@ const RegisterForm = () => {
     try {
       setCheckerLoading(true);
       const response = await axios.get(
-        `/api/user/username?username5=${username}`
+        `/api/user/username?username=${username}`
       );
       const data: User = response.data;
 
-      const user = data.username === username;
-
-      setUsernameExist(!!user);
-    } catch (error) {
+      // If the username exists (200 OK response), setUsernameExist to false
       setUsernameExist(false);
-      addToast({
-        message:
-          "مشکلی هنگام ارتباط با سرور به وجود آمد، لطفا با پشتیبانی تماس بگیرید!",
-      });
+    } catch (error: any) {
+      if (error.response) {
+        if (error.response.status === 404) {
+          // If the username does not exist (404 response), setUsernameExist to true
+          setUsernameExist(true);
+        } else {
+          // For other server errors (500 or other status codes), setUsernameExist to false and show an error message
+          setUsernameExist(false);
+          addToast({
+            message:
+              "مشکلی هنگام ارتباط با سرور به وجود آمد، لطفا با پشتیبانی تماس بگیرید!",
+          });
+        }
+      } else {
+        // Handle network errors or other unexpected errors
+        setUsernameExist(false);
+        addToast({
+          message:
+            "مشکلی هنگام ارتباط با سرور به وجود آمد، لطفا با پشتیبانی تماس بگیرید!",
+        });
+      }
     } finally {
       setCheckerLoading(false);
     }
   };
+
   axios.defaults.baseURL = "http://localhost:3000";
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -73,13 +88,23 @@ const RegisterForm = () => {
       const response = await axios.post("/api/auth/register", data);
 
       if (response.status !== 201) {
-        console.log("invalid register");
+        // show message
+        addToast({
+          message: "تبریک میگم، شما الان جزئی از خانواده تسکوگیم هستید",
+          duration: 3000,
+          type: "success",
+        });
+        // after 2 second redirect to login
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 3000);
       }
-
-      router.push("/auth/login");
     } catch (error) {
-      // show error
-      console.log("code 500 error");
+      addToast({
+        message:
+          "حساب کاربری شما ساخته نشد، لطفا به اطلاعات وارد شده دقت کنید ویا با پشتیبانی تماس بگیرید!",
+        type: "error",
+      });
     }
   };
 
@@ -151,10 +176,10 @@ const RegisterForm = () => {
           ) : (
             <p
               className={`text-sm font-medium text-nowrap flex ${
-                !usernameExist ? "text-green-500" : "text-red-500"
+                usernameExist ? "text-green-500" : "text-red-500"
               }`}
             >
-              {usernameExist ? (
+              {!usernameExist ? (
                 <>
                   <CancelCircleIcon className="ml-2" />
                   نام کاربری قبلا انتخاب شده است.
@@ -192,7 +217,10 @@ const RegisterForm = () => {
         />
       </div>
 
-      {(errors.username || errors.first_name || errors.last_name || errors.password) && (
+      {(errors.username ||
+        errors.first_name ||
+        errors.last_name ||
+        errors.password) && (
         <div className="bg-red-500/30 shadow-xl shadow-red-800/10 rounded-xl w-full p-4 space-y-3 animate-appearance-in">
           {Object.values(errors).map((error, index) => (
             <p key={index} className="text-red-500 text-sm animate-pulse">
