@@ -16,17 +16,18 @@ import InfoModal from "./InfoModal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/app/api/auth/register/schema";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/context/ToastContext";
 
 type Inputs = {
   first_name: string;
   last_name: string;
   username: string;
   password: string;
-  confirm_password: string;
 };
 
 const RegisterForm = () => {
   const router = useRouter();
+  const { addToast } = useToast();
 
   const {
     register,
@@ -48,7 +49,7 @@ const RegisterForm = () => {
     try {
       setCheckerLoading(true);
       const response = await axios.get(
-        `/api/user/username?username=${username}`
+        `/api/user/username?username5=${username}`
       );
       const data: User = response.data;
 
@@ -56,7 +57,11 @@ const RegisterForm = () => {
 
       setUsernameExist(!!user);
     } catch (error) {
-      //show error
+      setUsernameExist(false);
+      addToast({
+        message:
+          "مشکلی هنگام ارتباط با سرور به وجود آمد، لطفا با پشتیبانی تماس بگیرید!",
+      });
     } finally {
       setCheckerLoading(false);
     }
@@ -64,8 +69,6 @@ const RegisterForm = () => {
   axios.defaults.baseURL = "http://localhost:3000";
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const isPasswordMatch = data.password === data.confirm_password;
-
     try {
       const response = await axios.post("/api/auth/register", data);
 
@@ -110,12 +113,14 @@ const RegisterForm = () => {
           label="نام"
           {...register("first_name")}
           autoComplete="off"
+          tabIndex={0}
         />
         <Input
           type="text"
           label="نام خانوادگی"
           {...register("last_name")}
           autoComplete="off"
+          tabIndex={1}
         />
       </div>
       <div className="form-control w-full relative">
@@ -127,20 +132,13 @@ const RegisterForm = () => {
           autoComplete="off"
           onBlur={() => setUChecker(false)}
           onFocus={() => setUChecker(true)}
+          tabIndex={2}
         />
         <div
           className={`absolute z-40 left-1/2 -translate-x-1/2 bg-white shadow-primary-100 shadow-md rounded-xl p-5 flex flex-col space-y-4 ${
             uChecker ? "visible" : "invisible"
           }`}
         >
-          <Button
-            variant="light"
-            size="sm"
-            className="text-zinc-800 absolute top-3 left-3"
-            isIconOnly
-          >
-            <CancelCircleIcon className="w-4 h-4" />
-          </Button>
           <h3 className="font-medium text-right w-full">
             در دسترس بودن نام کاربری
           </h3>
@@ -178,6 +176,7 @@ const RegisterForm = () => {
               className="focus:outline-none"
               type="button"
               onClick={toggleVisibility}
+              tabIndex={3}
             >
               {isVisible ? (
                 <EyeOffIcon className="text-2xl text-default-400 pointer-events-none" />
@@ -193,13 +192,15 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="bg-red-500/30 shadow-xl shadow-red-800/10 rounded-xl w-full p-4 space-y-3 animate-appearance-in">
-        {Object.values(errors).map((error, index) => (
-          <p key={index} className="text-red-500 text-sm animate-pulse">
-            {error.message}
-          </p>
-        ))}
-      </div>
+      {(errors.username || errors.first_name || errors.last_name || errors.password) && (
+        <div className="bg-red-500/30 shadow-xl shadow-red-800/10 rounded-xl w-full p-4 space-y-3 animate-appearance-in">
+          {Object.values(errors).map((error, index) => (
+            <p key={index} className="text-red-500 text-sm animate-pulse">
+              {error.message}
+            </p>
+          ))}
+        </div>
+      )}
 
       <InfoModal />
 

@@ -10,8 +10,8 @@ import InfoCircleIcon from "./icons/InfoCircleIcon";
 interface ToastProps {
   id: number;
   message: string;
-  type: "success" | "error" | "warning" | "info";
-  duration: number;
+  type?: "success" | "error" | "warning" | "info";
+  duration?: number;
   onRemove: (id: number) => void;
 }
 
@@ -45,7 +45,13 @@ const backgroundColors = {
   info: "bg-blue-100",
 };
 
-const Toast = ({ id, message, type, duration, onRemove }: ToastProps) => {
+const Toast = ({
+  id,
+  message,
+  type = "info",
+  duration = 5000,
+  onRemove,
+}: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onRemove(id);
@@ -56,7 +62,7 @@ const Toast = ({ id, message, type, duration, onRemove }: ToastProps) => {
 
   return (
     <div
-      className={`w-full p-4 rounded shadow-sm space-x-3 ${toastTypeClasses[type]} transition-transform transform translate-x-full animate-slide-in`}
+      className={`w-full rounded shadow-sm space-x-3 ${toastTypeClasses[type]} transition-transform transform translate-x-full animate-slide-in`}
     >
       <Button
         onClick={() => onRemove(id)}
@@ -66,17 +72,16 @@ const Toast = ({ id, message, type, duration, onRemove }: ToastProps) => {
       >
         <CancelCircleIcon className="w-4 h-4" />
       </Button>
-      <span className="text-nowrap text-sm">{message}</span>
+      <span className="w-full text-wrap text-sm">{message}</span>
 
-      {/* <div className="w-10 h-10 bg-blue-500/30 flex justify-center items-center align-middle rounded-full">
-        {toastIcons[type]}
-      </div> */}
-
-      <div
-        className={`w-10 h-10 ${backgroundColors[type]} flex justify-center items-center rounded-xl animate-progress`}
+      <Button
+        className={`w-10 h-10 ${backgroundColors[type]} flex justify-center items-center rounded-xl animate-progress pointer-events-none`}
+        variant="light"
+        isIconOnly
+        disabled
       >
         {toastIcons[type]}
-      </div>
+      </Button>
     </div>
   );
 };
