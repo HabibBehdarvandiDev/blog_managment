@@ -66,10 +66,6 @@ const RegisterForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const isPasswordMatch = data.password === data.confirm_password;
 
-    if (!isPasswordMatch) {
-      console.log("passwords do not match!");
-    }
-
     try {
       const response = await axios.post("/api/auth/register", data);
 
@@ -196,33 +192,14 @@ const RegisterForm = () => {
           {...register("password")}
         />
       </div>
-      <div className="form-control w-full">
-        <Input
-          endContent={
-            <button
-              className="focus:outline-none"
-              type="button"
-              onClick={toggleVisibility}
-            >
-              {isVisible ? (
-                <EyeOffIcon className="text-2xl text-default-400 pointer-events-none" />
-              ) : (
-                <EyeIcon className="text-2xl text-default-400 pointer-events-none" />
-              )}
-            </button>
-          }
-          type={isVisible ? "text" : "password"}
-          label="تایید رمز عبور"
-          {...register("confirm_password")}
-          autoComplete="off"
-        />
-      </div>
 
-      {Object.values(errors).map((error, index) => (
-        <p key={index} className="text-red-500 text-sm">
-          {error.message}
-        </p>
-      ))}
+      <div className="bg-red-500/30 shadow-xl shadow-red-800/10 rounded-xl w-full p-4 space-y-3 animate-appearance-in">
+        {Object.values(errors).map((error, index) => (
+          <p key={index} className="text-red-500 text-sm animate-pulse">
+            {error.message}
+          </p>
+        ))}
+      </div>
 
       <InfoModal />
 
