@@ -4,7 +4,6 @@ import ContactSupportButton from "@/app/components/ContactSupportButton";
 import EyeIcon from "@/app/components/icons/EyeIcon";
 import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
 import { useToast } from "@/context/ToastContext";
-import { createSession } from "@/lib/session";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import Link from "next/link";
@@ -44,7 +43,6 @@ const LoginForm = () => {
         setTimeout(() => {
           router.push("/dashboard");
         }, 5000);
-        
       } else {
         addToast({
           message:
@@ -137,13 +135,13 @@ const LoginForm = () => {
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}
+        {isSubmitting ? "در حال ورود..." : "ورود"}
       </Button>
       <div className="flex gap-4 flex-col justify-around items-center">
         <Link
           className="text-sm text-primary"
           href={
-            pathname.includes("auth/login") ? "auth/register" : "auth/login"
+            pathname.includes("/auth/login") ? "/auth/register" : "/auth/login"
           }
         >
           {pathname.includes("auth/login")

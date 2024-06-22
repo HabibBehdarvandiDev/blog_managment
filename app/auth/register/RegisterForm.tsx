@@ -266,7 +266,7 @@ const RegisterForm = () => {
         <Link
           className="text-sm text-primary"
           href={
-            pathname.includes("auth/login") ? "auth/register" : "auth/login"
+            pathname.includes("/auth/login") ? "/auth/register" : "/auth/login"
           }
         >
           {pathname.includes("auth/login")

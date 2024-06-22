@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "./lib/session";
+import { decrypt, verifySession } from "./lib/session";
 
 export default async function middleware(req: NextRequest) {
   const protectedRoutes = ["/dashboard"];

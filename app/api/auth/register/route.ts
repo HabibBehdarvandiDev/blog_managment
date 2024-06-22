@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { registerSchema } from "./schema";
 import prisma from "@/utils/db";
 import bcrypt from "bcrypt";
+import { createSession } from "@/lib/session";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -51,6 +52,8 @@ export async function POST(req: NextRequest) {
       password: hashedPassword,
     },
   });
+
+  await createSession(newUser.id);
 
   return NextResponse.json(
     { message: "ثبت نام شما تکمیل شد.", newUser: newUser },
