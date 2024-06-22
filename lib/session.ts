@@ -16,7 +16,7 @@ const cookieOptions = {
   duration: 24 * 60 * 60 * 1000, // 1 day in milliseconds
 };
 
-async function encrypt(payload: JWTPayload) {
+export async function encrypt(payload: JWTPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -24,7 +24,7 @@ async function encrypt(payload: JWTPayload) {
     .sign(key);
 }
 
-async function decrypt(session: string) {
+export async function decrypt(session: string) {
   try {
     const { payload } = await jwtVerify(session, key, {
       algorithms: ["HS256"],
