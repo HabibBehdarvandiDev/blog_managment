@@ -54,10 +54,8 @@ export async function POST(req: NextRequest) {
   const response = NextResponse.json(
     {
       message: "احراز هویت موفقیت آمیز بود!",
-      userId: isUserExist.id,
     },
     { status: 200 }
   );
-
   return response;
 }

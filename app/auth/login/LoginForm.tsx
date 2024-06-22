@@ -33,7 +33,7 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await axios.post("/auth/login", data);
+      const response = await axios.post("/api/auth/login", data);
 
       if (response.status === 200) {
         addToast({
@@ -44,6 +44,7 @@ const LoginForm = () => {
         setTimeout(() => {
           router.push("/dashboard");
         }, 5000);
+        
       } else {
         addToast({
           message:
