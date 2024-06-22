@@ -50,4 +50,14 @@ export async function POST(req: NextRequest) {
   }
 
   await createSession(isUserExist.id);
+
+  const response = NextResponse.json(
+    {
+      message: "احراز هویت موفقیت آمیز بود!",
+      userId: isUserExist.id,
+    },
+    { status: 200 }
+  );
+
+  return response;
 }

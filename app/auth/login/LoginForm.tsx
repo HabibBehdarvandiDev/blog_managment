@@ -4,6 +4,7 @@ import ContactSupportButton from "@/app/components/ContactSupportButton";
 import EyeIcon from "@/app/components/icons/EyeIcon";
 import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
 import { useToast } from "@/context/ToastContext";
+import { createSession } from "@/lib/session";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import Link from "next/link";
@@ -31,17 +32,26 @@ const LoginForm = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    addToast({
-      message: JSON.stringify(data),
-      duration: 5000,
-      type: "success",
-    });
-
     try {
       const response = await axios.post("/auth/login", data);
 
-      console.log(response.data);
+      if (response.status === 200) {
+        addToast({
+          message: "ورود موفقیت آمیز بود. درحال انتقال به داشبورد...",
+          duration: 5000,
+          type: "success",
+        });
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 5000);
+      } else {
+        addToast({
+          message:
+            "مشکلی هنگام ارتباط با سرور به وجود آمد لطفا با پشتیبانی تماس بگیرید.",
+          duration: 5000,
+          type: "error",
+        });
+      }
     } catch (error) {
       addToast({
         message:
