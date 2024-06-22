@@ -52,8 +52,8 @@ const LoginForm = () => {
           {...register("username", {
             required: "نام کاربری برای احراز هویت یک فیلد اجباری است!",
             minLength: {
-              value: 5,
-              message: "نام کاربری باید بیشتر از 5 کاراکتر باشد.",
+              value: 8,
+              message: "نام کاربری باید بیشتر از 8 کاراکتر باشد.",
             },
             maxLength: {
               value: 20,

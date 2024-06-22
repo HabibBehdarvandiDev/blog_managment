@@ -33,9 +33,7 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<Inputs>({
-    resolver: zodResolver(registerSchema),
-  });
+  } = useForm<Inputs>();
 
   const [isVisible, setIsVisible] = useState(false);
   const [usernameExist, setUsernameExist] = useState(false);
@@ -136,14 +134,19 @@ const RegisterForm = () => {
         <Input
           type="text"
           label="نام"
-          {...register("first_name")}
+          {...register("first_name", {
+            required: "نام شما یک فیلد اجباری برای ساخت حساب کاربری است.",
+          })}
           autoComplete="off"
           tabIndex={0}
         />
         <Input
           type="text"
           label="نام خانوادگی"
-          {...register("last_name")}
+          {...register("last_name", {
+            required:
+              "نام خانوادگی شما یک فیلد اجباری برای ساخت حساب کاربری شما است.",
+          })}
           autoComplete="off"
           tabIndex={1}
         />
@@ -152,7 +155,17 @@ const RegisterForm = () => {
         <Input
           type="text"
           label="نام کاربری"
-          {...register("username")}
+          {...register("username", {
+            required: "نام کاربری برای احراز هویت یک فیلد اجباری است!",
+            minLength: {
+              value: 8,
+              message: "نام کاربری باید بیشتر از 8 کاراکتر باشد.",
+            },
+            maxLength: {
+              value: 20,
+              message: "نام کاربری نمی تواند بیشتر از 20 کاراکتر باشد.",
+            },
+          })}
           onKeyUp={handleUsernameKeyUp}
           autoComplete="off"
           onBlur={() => setUChecker(false)}
@@ -213,13 +226,19 @@ const RegisterForm = () => {
           autoComplete="off"
           type={isVisible ? "text" : "password"}
           label="رمز عبور"
-          {...register("password")}
+          {...register("password", {
+            required: "رمز عبور برای احراز هویت یک فیلد اجباری است.",
+            minLength: {
+              value: 8,
+              message: "رمز عبور باید حداقل 8 کاراکتر باشد.",
+            },
+          })}
         />
       </div>
 
-      {(errors.username ||
-        errors.first_name ||
+      {(errors.first_name ||
         errors.last_name ||
+        errors.username ||
         errors.password) && (
         <div className="bg-red-500/30 shadow-xl shadow-red-800/10 rounded-xl w-full p-4 space-y-3 animate-appearance-in">
           {Object.values(errors).map((error, index) => (
