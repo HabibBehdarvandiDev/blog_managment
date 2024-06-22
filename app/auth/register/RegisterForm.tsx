@@ -11,7 +11,7 @@ import { Spinner } from "@nextui-org/react";
 import axios, { AxiosError } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import ContactSupportButton from "./ContactSupportButton";
+import ContactSupportButton from "@/app/components/ContactSupportButton";
 import InfoModal from "./InfoModal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/app/api/auth/register/schema";
