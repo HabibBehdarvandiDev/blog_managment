@@ -3,6 +3,7 @@ import prisma from "@/utils/db";
 import { loginSchema } from "./schema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { createSession } from "@/lib/session";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -48,30 +49,5 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const payload = {
-    id: isUserExist.id,
-    userRoleId: isUserExist.role_id,
-    username: isUserExist.username,
-  };
-
-  const token = jwt.sign(payload, process.env.JWT_SECRET!, {
-    expiresIn: "1h",
-  });
-
-  const response = NextResponse.json(
-    {
-      message: "احراز هویت موفقیت آمیز بود!",
-    },
-    { status: 200 }
-  );
-
-  response.cookies.set("token", token, {
-    httpOnly: true,
-    secure: true,
-    path: "/",
-    sameSite: "strict",
-    maxAge: 60 * 60,
-  });
-
-  return response;
+  await createSession(isUserExist.id);
 }
