@@ -40,11 +40,11 @@ export async function createSession(userId: number) {
   const expires = new Date(Date.now() + cookieOptions.duration);
   const session = await encrypt({ userId, expires });
 
-  const cookieStore = cookies();
-  cookieStore.set(cookieOptions.name, session, {
+  cookies().set(cookieOptions.name, session, {
     ...cookieOptions.options,
     expires,
   });
+  return null;
 }
 
 export async function verifySession() {
