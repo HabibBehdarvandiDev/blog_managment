@@ -5,7 +5,8 @@ import EyeIcon from "@/app/components/icons/EyeIcon";
 import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
 import { useToast } from "@/context/ToastContext";
 import { Button, Input } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -16,6 +17,7 @@ type Inputs = {
 
 const LoginForm = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { addToast } = useToast();
 
   const {
@@ -112,7 +114,19 @@ const LoginForm = () => {
       >
         {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}
       </Button>
-      <ContactSupportButton />
+      <div className="flex gap-4 flex-col justify-around items-center">
+        <Link
+        className="text-sm text-primary"
+          href={
+            pathname.includes("auth/login") ? "auth/register" : "auth/login"
+          }
+        >
+          {pathname.includes("auth/login")
+            ? "حساب کاربری ندارید؟ ساختن حساب کاربری..."
+            : "حساب کاربری دارید؟ کلیک کنید..."}
+        </Link>
+        <ContactSupportButton />
+      </div>
     </form>
   );
 };

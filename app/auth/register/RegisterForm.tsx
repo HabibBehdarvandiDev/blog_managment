@@ -15,8 +15,9 @@ import ContactSupportButton from "@/app/components/ContactSupportButton";
 import InfoModal from "./InfoModal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/app/api/auth/register/schema";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
+import Link from "next/link";
 
 type Inputs = {
   first_name: string;
@@ -27,6 +28,7 @@ type Inputs = {
 
 const RegisterForm = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { addToast } = useToast();
 
   const {
@@ -260,7 +262,19 @@ const RegisterForm = () => {
       >
         {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}
       </Button>
-      <ContactSupportButton />
+      <div className="flex gap-4 flex-col justify-around items-center">
+        <Link
+          className="text-sm text-primary"
+          href={
+            pathname.includes("auth/login") ? "auth/register" : "auth/login"
+          }
+        >
+          {pathname.includes("auth/login")
+            ? "حساب کاربری ندارید؟ ساختن حساب کاربری..."
+            : "حساب کاربری دارید؟ کلیک کنید..."}
+        </Link>
+        <ContactSupportButton />
+      </div>
     </form>
   );
 };
