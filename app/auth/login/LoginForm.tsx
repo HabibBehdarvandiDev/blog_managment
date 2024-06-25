@@ -16,6 +16,7 @@ type Inputs = {
   password: string;
 };
 
+
 const LoginForm = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -34,6 +35,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post("/api/auth/login", data);
 
+
       if (response.status === 200) {
         addToast({
           message: "ورود موفقیت آمیز بود. درحال انتقال به داشبورد...",
@@ -51,6 +53,7 @@ const LoginForm = () => {
           type: "error",
         });
       }
+
     } catch (error) {
       addToast({
         message:
@@ -60,6 +63,7 @@ const LoginForm = () => {
       });
     }
   };
+
 
   return (
     <form
@@ -153,5 +157,6 @@ const LoginForm = () => {
     </form>
   );
 };
+
 
 export default LoginForm;
