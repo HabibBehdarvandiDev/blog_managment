@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { decrypt } from "@/lib/session";
 import { redirect } from "next/navigation";
 
+
 const LoginPage = async () => {
   const cookie = cookies().get("session")?.value;
   const session = await decrypt(cookie!);
@@ -11,6 +12,7 @@ const LoginPage = async () => {
   if (session?.userId) {
     redirect("/dashboard");
   }
+
 
   return (
     <section className="bg-white w-screen h-screen overflow-hidden flex">
@@ -21,5 +23,6 @@ const LoginPage = async () => {
     </section>
   );
 };
+
 
 export default LoginPage;
