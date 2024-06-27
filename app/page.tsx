@@ -6,7 +6,9 @@ export default function Home() {
   const { addToast } = useToast();
   return (
     <main>
+
       <div>
+
         <Button
           variant="shadow"
           color="primary"
