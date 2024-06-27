@@ -19,12 +19,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 import Link from "next/link";
 
+
 type Inputs = {
   first_name: string;
   last_name: string;
   username: string;
   password: string;
 };
+
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -36,6 +38,7 @@ const RegisterForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<Inputs>();
+
 
   const [isVisible, setIsVisible] = useState(false);
   const [usernameExist, setUsernameExist] = useState(false);
