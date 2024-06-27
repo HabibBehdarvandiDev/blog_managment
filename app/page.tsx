@@ -20,6 +20,7 @@ export default function Home() {
         >
           توست
         </Button>
+
         <Button
           variant="shadow"
           color="primary"
@@ -33,6 +34,7 @@ export default function Home() {
         >
           توست
         </Button>
+
         <Button
           variant="shadow"
           color="primary"
@@ -46,6 +48,7 @@ export default function Home() {
         >
           توست
         </Button>
+
         <Button
           variant="shadow"
           color="primary"
@@ -59,6 +62,7 @@ export default function Home() {
         >
           توست
         </Button>
+
       </div>
     </main>
   );
