@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { NextUIProvider } from "@nextui-org/react";
-import localFont from "next/font/local";
-import "./globals.css";
 import { ToastProvider } from "@/context/ToastContext";
+import { NextUIProvider } from "@nextui-org/react";
+import type { Metadata } from "next";
+import localFont from "next/font/local";
 import ToastContainer from "./components/ToastContainer";
-import { Suspense } from "react";
-import PageLoading from "./components/PageLoading";
+import "./globals.css";
 
 const Yekan = localFont({
   src: "./fonts/yekan/YekanBakh.woff2",

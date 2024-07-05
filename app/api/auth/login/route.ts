@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/utils/db";
-import { loginSchema } from "./schema";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { createSession } from "@/lib/session";
+import prisma from "@/utils/db";
+import bcrypt from "bcrypt";
+import { NextRequest, NextResponse } from "next/server";
+import { loginSchema } from "./schema";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -51,11 +50,10 @@ export async function POST(req: NextRequest) {
 
   await createSession(isUserExist.id);
 
-  const response = NextResponse.json(
+  return NextResponse.json(
     {
       message: "احراز هویت موفقیت آمیز بود!",
     },
     { status: 200 }
   );
-  return response;
 }

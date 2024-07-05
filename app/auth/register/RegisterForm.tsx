@@ -1,23 +1,21 @@
 "use client";
+import ContactSupportButton from "@/app/components/ContactSupportButton";
 import CancelCircleIcon from "@/app/components/icons/CancelCircleIcon";
 import CheckmarkCircleIcon from "@/app/components/icons/CheckmarkCircleIcon";
 import EyeIcon from "@/app/components/icons/EyeIcon";
 import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
+import { useToast } from "@/context/ToastContext";
 import { User } from "@/schema";
 import { debounce } from "@/utils/helpers";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/react";
-import axios, { AxiosError } from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import ContactSupportButton from "@/app/components/ContactSupportButton";
-import InfoModal from "./InfoModal";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "@/app/api/auth/register/schema";
-import { usePathname, useRouter } from "next/navigation";
-import { useToast } from "@/context/ToastContext";
+import axios from "axios";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import InfoModal from "./InfoModal";
 
 type Inputs = {
   first_name: string;
@@ -255,9 +253,9 @@ const RegisterForm = () => {
 
       <Button
         color="primary"
-        variant="shadow"
-        className="w-full font-medium"
+        className="w-full font-medium shadow-lg shadow-primary-100"
         type="submit"
+
         disabled={isSubmitting}
       >
         {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}

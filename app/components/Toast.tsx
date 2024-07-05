@@ -31,12 +31,6 @@ const toastIcons = {
   warning: <WarningCircleIcon className="text-yellow-600" />,
   info: <InfoCircleIcon className="text-blue-600" />,
 };
-const ringColors = {
-  success: "ring-green-500/60",
-  error: "ring-red-500/60",
-  warning: "ring-yellow-500/60",
-  info: "ring-blue-500/60",
-};
 
 const backgroundColors = {
   success: "bg-green-100",
