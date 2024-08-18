@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { registerSchema } from "./schema";
 import prisma from "@/utils/db";
 import bcrypt from "bcrypt";
-import { createSession } from "@/lib/session";
+import { createJWT } from "@/lib/session";
+import { createSession } from "@/lib/cookies";
+
 
 export async function POST(req: NextRequest) {
   let body;
@@ -50,13 +52,19 @@ export async function POST(req: NextRequest) {
       last_name: last_name,
       username: username.toLowerCase(),
       password: hashedPassword,
+      role_id: 2,
     },
   });
 
   await createSession(newUser.id);
+  
+  const token = await createJWT(
+    { userId: newUser.id, role: newUser.role_id },
+    "2h"
+  );
 
   return NextResponse.json(
-    { message: "ثبت نام شما تکمیل شد.", newUser: newUser },
+    { message: "ثبت نام شما تکمیل شد.", newUser: newUser, token },
     { status: 200 }
   );
 }

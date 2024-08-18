@@ -4,11 +4,12 @@ import ContactSupportButton from "@/app/components/ContactSupportButton";
 import EyeIcon from "@/app/components/icons/EyeIcon";
 import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
 import { useToast } from "@/context/ToastContext";
+import { validateJWT } from "@/lib/session";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -40,9 +41,22 @@ const LoginForm = () => {
           duration: 5000,
           type: "success",
         });
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 5000);
+        
+        try {
+          const { token } = response.data;
+          sessionStorage.setItem("session", token);
+
+          setTimeout(() => {
+            router.push("/dashboard");
+          }, 5000);
+        } catch (error) {
+          addToast({
+            message:
+              "مشکلی هنگام لاگین بوجود آمد، لطفا با پشتیبانی تماس بگیرید!",
+            duration: 5000,
+            type: "error",
+          });
+        }
       } else {
         addToast({
           message:

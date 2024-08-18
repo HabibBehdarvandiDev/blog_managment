@@ -79,8 +79,6 @@ const RegisterForm = () => {
     }
   };
 
-  axios.defaults.baseURL = "http://localhost:3000";
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const response = await axios.post("/api/auth/register", data);
@@ -92,10 +90,21 @@ const RegisterForm = () => {
           duration: 3000,
           type: "success",
         });
-        // after 2 second redirect to login
-        setTimeout(() => {
-          router.push("/auth/login");
-        }, 3000);
+
+        try {
+          const { token } = response.data;
+          sessionStorage.setItem("session", token);
+
+          setTimeout(() => {
+            router.push("/auth/login");
+          }, 3000);
+        } catch (error) {
+          addToast({
+            message:
+              "حساب کاربری شما ساخته شده اما مشکلی هنگام لاگین بوجود آمد، لطفا با پشتیبانی تماس بگیرید!",
+            type: "error",
+          });
+        }
       }
     } catch (error) {
       addToast({
@@ -255,7 +264,6 @@ const RegisterForm = () => {
         color="primary"
         className="w-full font-medium shadow-lg shadow-primary-100"
         type="submit"
-
         disabled={isSubmitting}
       >
         {isSubmitting ? "درحال ثبت نام..." : "ثبت نام"}

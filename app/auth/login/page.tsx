@@ -1,16 +1,8 @@
-import React from "react";
+import { checkSessionAndRedirect } from "@/lib/cookies";
 import LoginForm from "./LoginForm";
-import { cookies } from "next/headers";
-import { decrypt } from "@/lib/session";
-import { redirect } from "next/navigation";
 
 const LoginPage = async () => {
-  const cookie = cookies().get("session")?.value;
-  const session = await decrypt(cookie!);
-
-  if (session?.userId) {
-    redirect("/dashboard");
-  }
+  await checkSessionAndRedirect("/dashboard");
 
   return (
     <section className="bg-white w-screen h-screen overflow-hidden flex">
