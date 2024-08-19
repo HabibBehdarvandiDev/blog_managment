@@ -2,10 +2,10 @@
 
 import { Button } from "@nextui-org/react";
 import { useEffect } from "react";
-import CancelCircleIcon from "./icons/CancelCircleIcon";
-import CheckmarkCircleIcon from "./icons/CheckmarkCircleIcon";
-import WarningCircleIcon from "./icons/WarningCircleIcon";
-import InfoCircleIcon from "./icons/InfoCircleIcon";
+import CancelCircleIcon from "../ui/icons/CancelCircleIcon";
+import CheckmarkCircleIcon from "../ui/icons/CheckmarkCircleIcon";
+import WarningCircleIcon from "../ui/icons/WarningCircleIcon";
+import InfoCircleIcon from "../ui/icons/InfoCircleIcon";
 
 interface ToastProps {
   id: number;

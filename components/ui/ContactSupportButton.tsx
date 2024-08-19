@@ -1,4 +1,4 @@
-import SupportIcon from "@/app/components/icons/SupportIcon";
+import SupportIcon from "@/components/ui/icons/SupportIcon";
 import { Button } from "@nextui-org/button";
 
 const ContactSupportButton = () => {

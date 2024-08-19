@@ -2,7 +2,8 @@ import { ToastProvider } from "@/context/ToastContext";
 import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import ToastContainer from "./components/ToastContainer";
+import ToastContainer from "../components/toast/ToastContainer";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import "./globals.css";
 
 const Yekan = localFont({
@@ -23,10 +24,12 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body className={`${Yekan.className}`}>
         <NextUIProvider>
-          <ToastProvider>
-            {children}
-            <ToastContainer />
-          </ToastProvider>
+          <NextThemesProvider attribute="class" defaultTheme="light">
+            <ToastProvider>
+              {children}
+              <ToastContainer />
+            </ToastProvider>
+          </NextThemesProvider>
         </NextUIProvider>
       </body>
     </html>

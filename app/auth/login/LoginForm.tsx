@@ -1,8 +1,8 @@
 "use client";
 
-import ContactSupportButton from "@/app/components/ContactSupportButton";
-import EyeIcon from "@/app/components/icons/EyeIcon";
-import EyeOffIcon from "@/app/components/icons/EyeOffIcon";
+import ContactSupportButton from "@/components/ui/ContactSupportButton";
+import EyeIcon from "@/components/ui/icons/EyeIcon";
+import EyeOffIcon from "@/components/ui/icons/EyeOffIcon";
 import { useToast } from "@/context/ToastContext";
 import { validateJWT } from "@/lib/session";
 import { Button, Input } from "@nextui-org/react";
@@ -78,9 +78,9 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white w-full xl:w-2/3 2xl:w-2/5 h-screen lg:h-full flex flex-col justify-start items-center pt-20 p-5 space-y-5 overflow-hidden relative"
+      className="bg-white dark:bg-zinc-900 w-full xl:w-2/3 2xl:w-2/5 h-screen lg:h-full flex flex-col justify-start items-center pt-20 p-5 space-y-5 overflow-hidden relative"
     >
-      <h1 className="form-title text-2xl font-medium text-zinc-800">ورود</h1>
+      <h1 className="form-title text-2xl font-medium text-zinc-800 dark:text-white">ورود</h1>
       <p className="form-description text-sm text-zinc-400 w-full text-center">
         برای ورود به پنل کاربری لطفا اطلاعات حساب کاربری خود را وارد کنید .
       </p>
@@ -147,6 +147,7 @@ const LoginForm = () => {
         variant="shadow"
         className="w-full font-medium"
         type="submit"
+        size="lg"
         disabled={isSubmitting}
       >
         {isSubmitting ? "در حال ورود..." : "ورود"}

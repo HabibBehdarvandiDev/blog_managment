@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 import { createJWT } from "@/lib/session";
 import { createSession } from "@/lib/cookies";
 
-
 export async function POST(req: NextRequest) {
   let body;
   try {
@@ -57,9 +56,9 @@ export async function POST(req: NextRequest) {
   });
 
   await createSession(newUser.id);
-  
+
   const token = await createJWT(
-    { userId: newUser.id, role: newUser.role_id },
+    { userId: newUser.id, roleId: newUser.role_id },
     "2h"
   );
 

@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
   const token = await createJWT(
     {
       userId: isUserExist.id,
-      role: isUserExist.role_id,
+      roleId: isUserExist.role_id,
     },
     "2h"
   );
