@@ -5,7 +5,7 @@ const RegisterPage = () => {
   
 
   return (
-    <section className="bg-white w-screen h-screen overflow-hidden flex">
+    <section className="bg-background w-screen h-screen overflow-hidden flex">
       <RegisterForm />
       <div className="hidden lg:flex w-full h-screen bg-primary items-center justify-center align-middle">helo</div>
     </section>

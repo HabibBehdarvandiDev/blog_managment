@@ -133,9 +133,9 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white dark:bg-zinc-900 w-full xl:w-2/3 2xl:w-2/5 h-screen lg:h-full flex flex-col justify-start items-center pt-20 p-5 space-y-5 overflow-hidden relative"
+      className="bg-background w-full xl:w-2/3 2xl:w-2/5 h-screen lg:h-full flex flex-col justify-start items-center pt-20 p-5 space-y-5 overflow-hidden relative"
     >
-      <h1 className="form-title text-2xl font-medium text-zinc-800 dark:text-white">
+      <h1 className="form-title text-2xl font-medium text-foreground">
         ثبت نام
       </h1>
       <p className="form-description text-sm text-zinc-400 w-full text-center">

@@ -1,4 +1,3 @@
-import Header from "@/components/ui/header/Header";
 import Navbar from "@/components/ui/navbar/Navbar";
 
 export default function DashboardLayout({

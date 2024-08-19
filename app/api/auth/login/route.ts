@@ -1,4 +1,4 @@
-import { createJWT,  } from "@/lib/session";
+import { createJWT } from "@/lib/session";
 import prisma from "@/utils/db";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
@@ -51,10 +51,16 @@ export async function POST(req: NextRequest) {
 
   await createSession(isUserExist.id);
 
+  const userRole = await prisma.role.findUnique({
+    where: {
+      id: isUserExist.role_id,
+    },
+  });
+
   const token = await createJWT(
     {
       userId: isUserExist.id,
-      roleId: isUserExist.role_id,
+      role: userRole?.role_name,
     },
     "2h"
   );

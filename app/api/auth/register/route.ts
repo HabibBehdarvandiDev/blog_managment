@@ -57,8 +57,14 @@ export async function POST(req: NextRequest) {
 
   await createSession(newUser.id);
 
+  const userRole = await prisma.role.findUnique({
+    where: {
+      id: newUser.role_id,
+    },
+  });
+
   const token = await createJWT(
-    { userId: newUser.id, roleId: newUser.role_id },
+    { userId: newUser.id, role: userRole?.role_name },
     "2h"
   );
 

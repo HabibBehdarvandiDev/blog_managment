@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type User = {
   id: number;
   first_name: string;
@@ -14,4 +16,17 @@ type User = {
   updated_at: string;
 };
 
-export type { User };
+type NavLinks = {
+  title: string;
+  href: string;
+  startContent: ReactNode;
+};
+
+type DropDownSections = {
+  sectionTitle: string;
+  DropDownLinks: NavLinks[];
+};
+
+type DropDownMenu = DropDownSections;
+
+export type { User, NavLinks, DropDownMenu };

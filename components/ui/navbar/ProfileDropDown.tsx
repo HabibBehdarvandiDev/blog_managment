@@ -1,5 +1,7 @@
 "use client";
 
+import { User } from "@/schema";
+import { getSessionToken } from "@/utils/helpers";
 import {
   Dropdown,
   DropdownItem,
@@ -8,6 +10,8 @@ import {
   DropdownTrigger,
 } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import TextBoldIcon from "../icons/bold";
 import Settings02Icon from "../icons/settings";
 import SupportIcon from "../icons/SupportIcon";
@@ -16,30 +20,23 @@ import TrashIcon from "../icons/TrashIcon";
 import UnfoldIcon from "../icons/UnfoldIcon";
 import UserIcon from "../icons/user";
 import Wallet01Icon from "../icons/wallet";
-import { useEffect, useState } from "react";
-import { User } from "@/schema";
-import { useRouter } from "next/navigation";
-import { decodeJWT } from "@/lib/session";
-import axios from "axios";
 import ProfileDropDownSkeleton from "./ProfileDropDownSkeleton";
+import { AdminDropDownLinks } from "./ProfileDropDownLinks";
+import Link from "next/link";
 
 const ProfileDropDown = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
+  const role = getSessionToken()?.role;
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         setLoading(true); // Start loading before making the request
-        const token = sessionStorage.getItem("session");
 
-        if (!token) {
-          setError(true);
-          return; // Exit early if there's no token
-        }
-
-        const decodedToken = decodeJWT(token);
+        const decodedToken = getSessionToken();
         const response = await axios.get(
           `http://localhost:3000/api/user/${decodedToken?.userId}`
         );
@@ -79,6 +76,60 @@ const ProfileDropDown = () => {
                   name={user?.username}
                 />
               </DropdownTrigger>
+              {/* <DropdownMenu aria-label="Profile Actions" variant="faded">
+                <DropdownItem key="profile" className="h-14 gap-2">
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{user?.username}</p>
+                </DropdownItem>
+                <DropdownSection showDivider title={"اکشن ها"}>
+                  <DropdownItem
+                    key="settings"
+                    startContent={<UserIcon className="w-4 h-4" />}
+                  >
+                    پروفایل
+                  </DropdownItem>
+                  <DropdownItem
+                    key="team_settings"
+                    startContent={<Settings02Icon className="w-4 h-4" />}
+                  >
+                    تنظیمات
+                  </DropdownItem>
+                  <DropdownItem
+                    key="analytics"
+                    startContent={<TextBoldIcon className="w-4 h-4" />}
+                  >
+                    بلاگ های من
+                  </DropdownItem>
+                  <DropdownItem
+                    key="system"
+                    startContent={<Wallet01Icon className="w-4 h-4" />}
+                  >
+                    کیف پول من
+                  </DropdownItem>
+                  <DropdownItem
+                    key="configurations"
+                    startContent={<TransactionIcon className="w-4 h-4" />}
+                  >
+                    پرداختی ها
+                  </DropdownItem>
+                  <DropdownItem
+                    key="help_and_feedback"
+                    startContent={<SupportIcon className="w-4 h-4" />}
+                  >
+                    ارتباط با پشتیبانی
+                  </DropdownItem>
+                </DropdownSection>
+                <DropdownSection title="بخش خطرناکش">
+                  <DropdownItem
+                    className="text-danger"
+                    color="danger"
+                    description="اول سیو کن بعد برو"
+                    startContent={<TrashIcon className="w-4 h-4" />}
+                  >
+                    خروج از حساب کاربری
+                  </DropdownItem>
+                </DropdownSection>
+              </DropdownMenu> */}
               <DropdownMenu aria-label="Profile Actions" variant="faded">
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="font-semibold">Signed in as</p>

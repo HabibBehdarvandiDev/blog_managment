@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "./lib/cookies"; // Adjust the path as needed
 
 export async function middleware(req: NextRequest) {
-  /* const protectedRoutes = ["/dashboard"];
+  const protectedRoutes = ["/dashboard"];
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
 
@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
     if (!session?.userId) {
       return NextResponse.redirect(new URL("/auth/login", req.nextUrl));
     }
-  } */
+  }
 
   return NextResponse.next();
 }
