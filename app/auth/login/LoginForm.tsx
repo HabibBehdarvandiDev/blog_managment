@@ -47,7 +47,7 @@ const LoginForm = () => {
           sessionStorage.setItem("session", token);
 
           setTimeout(() => {
-            router.push("/dashboard");
+            router.push("/admin/dashboard");
           }, 5000);
         } catch (error) {
           addToast({

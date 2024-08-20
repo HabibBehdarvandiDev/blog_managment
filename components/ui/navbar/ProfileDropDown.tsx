@@ -21,7 +21,10 @@ import UnfoldIcon from "../icons/UnfoldIcon";
 import UserIcon from "../icons/user";
 import Wallet01Icon from "../icons/wallet";
 import ProfileDropDownSkeleton from "./ProfileDropDownSkeleton";
-import { AdminDropDownLinks } from "./ProfileDropDownLinks";
+import {
+  AdminDropDownLinks,
+  WriterDropDownLinks,
+} from "./ProfileDropDownLinks";
 import Link from "next/link";
 
 const ProfileDropDown = () => {
@@ -51,7 +54,7 @@ const ProfileDropDown = () => {
         console.error(error);
         setError(true);
       } finally {
-        setLoading(false); // Stop loading only when the request finishes
+        setLoading(false);
       }
     };
 
@@ -76,113 +79,48 @@ const ProfileDropDown = () => {
                   name={user?.username}
                 />
               </DropdownTrigger>
-              {/* <DropdownMenu aria-label="Profile Actions" variant="faded">
+              <DropdownMenu aria-label="Dynamic Actions" variant="faded">
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{user?.username}</p>
                 </DropdownItem>
-                <DropdownSection showDivider title={"اکشن ها"}>
-                  <DropdownItem
-                    key="settings"
-                    startContent={<UserIcon className="w-4 h-4" />}
-                  >
-                    پروفایل
-                  </DropdownItem>
-                  <DropdownItem
-                    key="team_settings"
-                    startContent={<Settings02Icon className="w-4 h-4" />}
-                  >
-                    تنظیمات
-                  </DropdownItem>
-                  <DropdownItem
-                    key="analytics"
-                    startContent={<TextBoldIcon className="w-4 h-4" />}
-                  >
-                    بلاگ های من
-                  </DropdownItem>
-                  <DropdownItem
-                    key="system"
-                    startContent={<Wallet01Icon className="w-4 h-4" />}
-                  >
-                    کیف پول من
-                  </DropdownItem>
-                  <DropdownItem
-                    key="configurations"
-                    startContent={<TransactionIcon className="w-4 h-4" />}
-                  >
-                    پرداختی ها
-                  </DropdownItem>
-                  <DropdownItem
-                    key="help_and_feedback"
-                    startContent={<SupportIcon className="w-4 h-4" />}
-                  >
-                    ارتباط با پشتیبانی
-                  </DropdownItem>
-                </DropdownSection>
-                <DropdownSection title="بخش خطرناکش">
-                  <DropdownItem
-                    className="text-danger"
-                    color="danger"
-                    description="اول سیو کن بعد برو"
-                    startContent={<TrashIcon className="w-4 h-4" />}
-                  >
-                    خروج از حساب کاربری
-                  </DropdownItem>
-                </DropdownSection>
-              </DropdownMenu> */}
-              <DropdownMenu aria-label="Profile Actions" variant="faded">
-                <DropdownItem key="profile" className="h-14 gap-2">
-                  <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{user?.username}</p>
-                </DropdownItem>
-                <DropdownSection showDivider title={"اکشن ها"}>
-                  <DropdownItem
-                    key="settings"
-                    startContent={<UserIcon className="w-4 h-4" />}
-                  >
-                    پروفایل
-                  </DropdownItem>
-                  <DropdownItem
-                    key="team_settings"
-                    startContent={<Settings02Icon className="w-4 h-4" />}
-                  >
-                    تنظیمات
-                  </DropdownItem>
-                  <DropdownItem
-                    key="analytics"
-                    startContent={<TextBoldIcon className="w-4 h-4" />}
-                  >
-                    بلاگ های من
-                  </DropdownItem>
-                  <DropdownItem
-                    key="system"
-                    startContent={<Wallet01Icon className="w-4 h-4" />}
-                  >
-                    کیف پول من
-                  </DropdownItem>
-                  <DropdownItem
-                    key="configurations"
-                    startContent={<TransactionIcon className="w-4 h-4" />}
-                  >
-                    پرداختی ها
-                  </DropdownItem>
-                  <DropdownItem
-                    key="help_and_feedback"
-                    startContent={<SupportIcon className="w-4 h-4" />}
-                  >
-                    ارتباط با پشتیبانی
-                  </DropdownItem>
-                </DropdownSection>
-                <DropdownSection title="بخش خطرناکش">
-                  <DropdownItem
-                    className="text-danger"
-                    color="danger"
-                    description="اول سیو کن بعد برو"
-                    startContent={<TrashIcon className="w-4 h-4" />}
-                  >
-                    خروج از حساب کاربری
-                  </DropdownItem>
-                </DropdownSection>
+                {role === "admin"
+                  ? AdminDropDownLinks.map((link, index) => (
+                      <DropdownSection
+                        key={link.sectionTitle}
+                        title={link.sectionTitle}
+                      >
+                        {link.DropDownLinks.map(
+                          (dropDownLink, dropDownLinkIndex) => (
+                            <DropdownItem
+                              key={dropDownLink.title}
+                              startContent={dropDownLink.startContent}
+                              href={dropDownLink.href}
+                            >
+                              {dropDownLink.title}
+                            </DropdownItem>
+                          )
+                        )}
+                      </DropdownSection>
+                    ))
+                  : WriterDropDownLinks.map((link, index) => (
+                      <DropdownSection
+                        key={link.sectionTitle}
+                        title={link.sectionTitle}
+                      >
+                        {link.DropDownLinks.map(
+                          (dropDownLink, dropDownLinkIndex) => (
+                            <DropdownItem
+                              key={dropDownLink.title}
+                              startContent={dropDownLink.startContent}
+                              href={dropDownLink.href}
+                            >
+                              {dropDownLink.title}
+                            </DropdownItem>
+                          )
+                        )}
+                      </DropdownSection>
+                    ))}
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -214,54 +152,44 @@ const ProfileDropDown = () => {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{user?.username}</p>
                 </DropdownItem>
-                <DropdownSection showDivider title={"اکشن ها"}>
-                  <DropdownItem
-                    key="settings"
-                    startContent={<UserIcon className="w-4 h-4" />}
-                  >
-                    پروفایل
-                  </DropdownItem>
-                  <DropdownItem
-                    key="team_settings"
-                    startContent={<Settings02Icon className="w-4 h-4" />}
-                  >
-                    تنظیمات
-                  </DropdownItem>
-                  <DropdownItem
-                    key="analytics"
-                    startContent={<TextBoldIcon className="w-4 h-4" />}
-                  >
-                    بلاگ های من
-                  </DropdownItem>
-                  <DropdownItem
-                    key="system"
-                    startContent={<Wallet01Icon className="w-4 h-4" />}
-                  >
-                    کیف پول من
-                  </DropdownItem>
-                  <DropdownItem
-                    key="configurations"
-                    startContent={<TransactionIcon className="w-4 h-4" />}
-                  >
-                    پرداختی ها
-                  </DropdownItem>
-                  <DropdownItem
-                    key="help_and_feedback"
-                    startContent={<SupportIcon className="w-4 h-4" />}
-                  >
-                    ارتباط با پشتیبانی
-                  </DropdownItem>
-                </DropdownSection>
-                <DropdownSection title="بخش خطرناکش">
-                  <DropdownItem
-                    className="text-primary"
-                    color="primary"
-                    description="اول سیو کن بعد برو"
-                    startContent={<TrashIcon className="w-4 h-4" />}
-                  >
-                    خروج از حساب کاربری
-                  </DropdownItem>
-                </DropdownSection>
+
+                {role === "admin"
+                  ? AdminDropDownLinks.map((link, index) => (
+                      <DropdownSection
+                        key={link.sectionTitle}
+                        title={link.sectionTitle}
+                      >
+                        {link.DropDownLinks.map(
+                          (dropDownLink, dropDownLinkIndex) => (
+                            <DropdownItem
+                              key={dropDownLink.title}
+                              startContent={dropDownLink.startContent}
+                              href={dropDownLink.href}
+                            >
+                              {dropDownLink.title}
+                            </DropdownItem>
+                          )
+                        )}
+                      </DropdownSection>
+                    ))
+                  : WriterDropDownLinks.map((link, index) => (
+                      <DropdownSection
+                        key={link.sectionTitle}
+                        title={link.sectionTitle}
+                      >
+                        {link.DropDownLinks.map(
+                          (dropDownLink, dropDownLinkIndex) => (
+                            <DropdownItem
+                              key={dropDownLink.title}
+                              startContent={dropDownLink.startContent}
+                              href={dropDownLink.href}
+                            >
+                              {dropDownLink.title}
+                            </DropdownItem>
+                          )
+                        )}
+                      </DropdownSection>
+                    ))}
               </DropdownMenu>
             </Dropdown>
           </div>

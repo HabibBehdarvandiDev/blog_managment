@@ -1,11 +1,12 @@
 import { DropDownMenu } from "@/schema";
 import Settings02Icon from "../icons/settings";
-import SourceCodeIcon from "../icons/sourceCodeIcon";
 import SupportIcon from "../icons/SupportIcon";
 import TransactionIcon from "../icons/transaction";
 import UserIcon from "../icons/user";
 import Wallet01Icon from "../icons/wallet";
 import TextBoldIcon from "../icons/bold";
+import SourceCodeIcon from "../icons/SourceCodeIcon";
+import RankingIcon from "../icons/RankingIcon";
 
 const AdminDropDownLinks: DropDownMenu[] = [
   {
@@ -65,6 +66,11 @@ const WriterDropDownLinks: DropDownMenu[] = [
         startContent: <Settings02Icon className="w-5 h-5" />,
       },
       {
+        title: "رتبه من",
+        href: "/writer/myrank",
+        startContent: <RankingIcon className="w-5 h-5" />,
+      },
+      {
         title: "بلاگ های من",
         href: "/writer/myblogs",
         startContent: <TextBoldIcon className="w-5 h-5" />,
@@ -74,6 +80,7 @@ const WriterDropDownLinks: DropDownMenu[] = [
         href: "/writer/mywallet",
         startContent: <Wallet01Icon className="w-5 h-5" />,
       },
+
       {
         title: "پرداختی ها",
         href: "/writer/transactions",
@@ -98,4 +105,4 @@ const WriterDropDownLinks: DropDownMenu[] = [
   },
 ];
 
-export { AdminDropDownLinks,WriterDropDownLinks };
+export { AdminDropDownLinks, WriterDropDownLinks };
