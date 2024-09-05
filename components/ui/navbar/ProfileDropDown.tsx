@@ -41,7 +41,7 @@ const ProfileDropDown = () => {
 
         const decodedToken = getSessionToken();
         const response = await axios.get(
-          `http://localhost:3000/api/user/${decodedToken?.userId}`
+          `http://localhost:3000/api/users/${decodedToken?.userId}`
         );
 
         if (response.status !== 200) {

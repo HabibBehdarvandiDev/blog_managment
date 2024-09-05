@@ -4,13 +4,13 @@ import { Divider } from "@nextui-org/react";
 import ProfileDropDown from "./ProfileDropDown";
 import NavbarMenu from "./NavbarMenu";
 
-
 const Navbar = () => {
   return (
-    <aside className="flex flex-col p-5 bg-gray-100 shadow-sm h-screen overflow-clip">
+    <aside className="flex flex-col p-5 bg-background shadow-sm h-screen overflow-clip">
       <ProfileDropDown />
       <Divider className="my-6" />
       <NavbarMenu />
+      <Divider className="my-6" />
     </aside>
   );
 };

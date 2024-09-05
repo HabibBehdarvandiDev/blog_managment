@@ -36,14 +36,12 @@ const NavbarMenu = () => {
               <Link
                 key={index}
                 href={link.href}
-                className={`flex justify-start items-center gap-2 p-2 rounded-xl ${
-                  isActive
-                    ? "shadow-sm bg-background"
-                    : "bg-gray-100 hover:bg-background"
+                className={`flex justify-center lg:justify-start items-center gap-2 p-2 rounded-xl ${
+                  isActive ? "shadow-sm bg-primary text-white" : "bg-background"
                 }`}
               >
                 {link.startContent}
-                <span>{link.title}</span>
+                <span className="hidden lg:flex">{link.title}</span>
               </Link>
             );
           })
@@ -53,14 +51,12 @@ const NavbarMenu = () => {
               <Link
                 key={index}
                 href={link.href}
-                className={`flex justify-start items-center gap-2 p-2 rounded-xl ${
-                  isActive
-                    ? "shadow-sm bg-background"
-                    : "bg-gray-100 hover:bg-background"
+                className={`flex lg:justify-start items-center gap-2 justify-center p-2 rounded-xl ${
+                  isActive ? "shadow-sm bg-primary text-white" : "bg-background"
                 }`}
               >
                 {link.startContent}
-                <span>{link.title}</span>
+                <span className="hidden lg:flex">{link.title}</span>
               </Link>
             );
           })}

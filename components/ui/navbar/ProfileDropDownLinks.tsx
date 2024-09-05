@@ -7,6 +7,7 @@ import Wallet01Icon from "../icons/wallet";
 import TextBoldIcon from "../icons/bold";
 import SourceCodeIcon from "../icons/SourceCodeIcon";
 import RankingIcon from "../icons/RankingIcon";
+import Analytics02Icon from "../icons/AnalyticsIcon";
 
 const AdminDropDownLinks: DropDownMenu[] = [
   {
@@ -28,9 +29,9 @@ const AdminDropDownLinks: DropDownMenu[] = [
         startContent: <Wallet01Icon className="w-5 h-5" />,
       },
       {
-        title: "پرداختی ها",
-        href: "/admin/transactions",
-        startContent: <TransactionIcon className="w-5 h-5" />,
+        title: "گزارش ها",
+        href: "/admin/reports",
+        startContent: <Analytics02Icon className="w-5 h-5" />,
       },
     ],
   },

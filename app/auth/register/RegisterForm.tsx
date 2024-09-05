@@ -47,7 +47,7 @@ const RegisterForm = () => {
     try {
       setCheckerLoading(true);
       const response = await axios.get(
-        `/api/user/username?username=${username}`
+        `/api/users/username?username=${username}`
       );
       const data: User = response.data;
 

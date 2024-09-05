@@ -1,9 +1,13 @@
-import React from 'react'
+import prisma from "@/utils/db";
+import UserManagmentTable from "./(table)/Table";
+import { UserManagmentTableSchema } from "@/schema";
 
-const ManagmentPage = () => {
+const ManagmentPage = async () => {
   return (
-    <div>ManagmentPage</div>
-  )
-}
+    <div>
+      <UserManagmentTable  />
+    </div>
+  );
+};
 
-export default ManagmentPage
+export default ManagmentPage;

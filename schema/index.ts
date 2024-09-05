@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import { ReactNode } from "react";
 
 type User = {
@@ -29,4 +30,21 @@ type DropDownSections = {
 
 type DropDownMenu = DropDownSections;
 
-export type { User, NavLinks, DropDownMenu };
+type UserManagmentTableSchema = {
+  id:number;
+  first_name: string;
+  last_name: string;
+  username: string;
+  active: boolean;
+  role: {
+    role_name: string;
+  };
+  userwallet: {
+    balance:  Decimal | null;
+  } | null;
+  _count: {
+    blog: number;
+  };
+};
+
+export type { User, NavLinks, DropDownMenu,UserManagmentTableSchema };
